@@ -1,0 +1,7 @@
+services:
+  web:
+    command: python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./app:/app/app
+    environment:
+      DATABASE_URL: postgresql+asyncpg://todo_user:todo_password@db:5432/todo_db
