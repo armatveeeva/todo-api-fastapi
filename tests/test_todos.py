@@ -1,12 +1,12 @@
-from unittest.mock import AsyncMock, patch
-
 import pytest
+from unittest.mock import AsyncMock
 
 
 @pytest.mark.asyncio
 async def test_create_todo(client):
     response = await client.post(
-        "/todos/", json={"title": "Купить молоко", "description": "В магазине", "completed": False}
+        "/todos/",
+        json={"title": "Купить молоко", "description": "В магазине", "completed": False}
     )
     assert response.status_code == 201
     data = response.json()
@@ -37,11 +37,15 @@ async def test_health_check(client):
 
 
 @pytest.mark.asyncio
-@patch("app.crud.notifications.send_notification", new_callable=AsyncMock)
-async def test_create_todo_sends_notification(client, mock_send_notification):
-    mock_send_notification.return_value = True
+async def test_create_todo_sends_notification(client, monkeypatch):
+    mock_send = AsyncMock(return_value=True)
+
+    monkeypatch.setattr("app.crud.notifications.send_notification", mock_send)
+
     response = await client.post(
-        "/todos/", json={"title": "Важная задача", "description": "Проверка мока", "completed": False}
+        "/todos/",
+        json={"title": "Важная задача", "description": "Проверка мока", "completed": False}
     )
+
     assert response.status_code == 201
-    mock_send_notification.assert_called_once_with("Важная задача")
+    mock_send.assert_called_once_with("Важная задача")
