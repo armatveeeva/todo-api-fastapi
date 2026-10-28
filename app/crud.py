@@ -1,14 +1,16 @@
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
-from . import models, schemas, notifications
-from typing import List, Optional
 import logging
+
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from . import models, notifications, schemas
 
 logger = logging.getLogger(__name__)
 
 
-async def get_todos(db: AsyncSession, skip: int = 0, limit: int = 10, completed: Optional[bool] = None) -> List[
-    models.Todo]:
+async def get_todos(
+    db: AsyncSession, skip: int = 0, limit: int = 10, completed: bool | None = None
+) -> list[models.Todo]:
     query = select(models.Todo)
     if completed is not None:
         query = query.where(models.Todo.completed == completed)
@@ -17,7 +19,7 @@ async def get_todos(db: AsyncSession, skip: int = 0, limit: int = 10, completed:
     return result.scalars().all()
 
 
-async def get_todo(db: AsyncSession, todo_id: int) -> Optional[models.Todo]:
+async def get_todo(db: AsyncSession, todo_id: int) -> models.Todo | None:
     result = await db.execute(select(models.Todo).where(models.Todo.id == todo_id))
     return result.scalar_one_or_none()
 
@@ -33,7 +35,7 @@ async def create_todo(db: AsyncSession, todo: schemas.TodoCreate) -> models.Todo
     return db_todo
 
 
-async def update_todo(db: AsyncSession, todo_id: int, todo: schemas.TodoUpdate) -> Optional[models.Todo]:
+async def update_todo(db: AsyncSession, todo_id: int, todo: schemas.TodoUpdate) -> models.Todo | None:
     db_todo = await get_todo(db, todo_id)
     if not db_todo:
         return None

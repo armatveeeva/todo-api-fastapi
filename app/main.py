@@ -1,11 +1,10 @@
 import logging
+
 from fastapi import FastAPI
+
 from .routers import todos
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 logger.info("Инициализация приложения FastAPI...")
@@ -18,9 +17,11 @@ app = FastAPI(
 
 app.include_router(todos.router)
 
+
 @app.get("/")
 async def root():
     return {"message": "Welcome to Production-Ready Todo API!"}
+
 
 @app.get("/health")
 async def health_check():

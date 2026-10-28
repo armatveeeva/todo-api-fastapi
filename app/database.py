@@ -1,13 +1,16 @@
-import os
 import logging
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
-from sqlalchemy.orm import declarative_base
+import os
+
 from dotenv import load_dotenv
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.orm import declarative_base
 
 logger = logging.getLogger(__name__)
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+asyncpg://todo_user:todo_password@localhost:5432/todo_db")
+DATABASE_URL = os.getenv(
+    "DATABASE_URL", "postgresql+asyncpg://todo_user:todo_password@localhost:5432/todo_db"
+)
 
 if DATABASE_URL.startswith("sqlite"):
     engine = create_async_engine(
@@ -31,6 +34,7 @@ AsyncSessionLocal = async_sessionmaker(
 )
 
 Base = declarative_base()
+
 
 async def get_db() -> AsyncSession:
     async with AsyncSessionLocal() as session:
