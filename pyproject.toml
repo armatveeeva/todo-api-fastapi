@@ -33,9 +33,14 @@ target-version = "py311"
 select = ["E", "F", "I", "B", "UP", "N", "W"]
 ignore = ["B008"]
 
+[tool.mypy]
+python_version = "3.11"
+strict = true
+ignore_missing_imports = true
+
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
-testpaths = ["app/tests"]
+testpaths = ["tests"]
 
 [build-system]
 requires = ["poetry-core"]

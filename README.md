@@ -30,6 +30,18 @@ RESTful API для управления задачами, реализованн
 - **Контейнеризация:** Docker, Docker Compose
 - **Интерактивная документация:** Swagger UI (OpenAPI 3.0, генерируется автоматически)
 
+## Архитектура
+
+```mermaid
+graph TD
+    Client["HTTP Client"] -->|REST| Router["FastAPI Router\n/todos"]
+    Router --> CRUD["CRUD Layer\ncrud.py"]
+    CRUD -->|AsyncSession| DB[("PostgreSQL\nasyncpg")]
+    CRUD --> Notify["Notifications\nnotifications.py"]
+    Alembic["Alembic\nMigrations"] --> DB
+    Tests["Pytest + httpx\ntests/"] -->|override get_db| SQLite[("SQLite in-memory")]
+```
+
 ## Быстрый старт
 
 ### Предварительные требования
@@ -41,5 +53,5 @@ RESTful API для управления задачами, реализованн
 
 1. Клонируйте репозиторий:
 ```bash
-git clone https://github.com/armatveeeva/todo-api.git
-cd todo-api
+git clone https://github.com/armatveeeva/todo-api-fastapi.git
+cd todo-api-fastapi

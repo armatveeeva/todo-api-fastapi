@@ -19,10 +19,9 @@ app.include_router(todos.router)
 
 
 @app.get("/")
-async def root():
+def root():
     return {"message": "Welcome to Production-Ready Todo API!"}
 
-
 @app.get("/health")
-async def health_check():
+def health_check():
     return {"status": "healthy"}
