@@ -13,5 +13,6 @@ class Todo(Base):
     description = Column(String(500), nullable=True)
     completed = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
-    updated_at = Column(DateTime(timezone=True), default=lambda: datetime.now(UTC),
-                        onupdate=lambda: datetime.now(UTC))
+    updated_at = Column(
+        DateTime(timezone=True), default=lambda: datetime.now(UTC), onupdate=lambda: datetime.now(UTC)
+    )
