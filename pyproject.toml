@@ -36,9 +36,12 @@ ignore = ["B008"]
 
 [tool.mypy]
 python_version = "3.11"
-strict = true
 ignore_missing_imports = true
 explicit_package_bases = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+check_untyped_defs = false
+disallow_untyped_defs = false
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

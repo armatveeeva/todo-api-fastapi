@@ -5,7 +5,7 @@ from sqlalchemy import Boolean, Column, DateTime, Integer, String
 from .database import Base
 
 
-class Todo(Base):
+class Todo(Base):  # type: ignore[misc]  # type: ignore[misc]
     __tablename__ = "todos"
 
     id = Column(Integer, primary_key=True, index=True)

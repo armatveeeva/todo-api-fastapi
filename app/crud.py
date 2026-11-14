@@ -30,7 +30,7 @@ async def create_todo(db: AsyncSession, todo: schemas.TodoCreate) -> models.Todo
     await db.commit()
     await db.refresh(db_todo)
 
-    await notifications.send_notification(db_todo.title)
+    await notifications.send_notification(todo.title)
     logger.info(f"Создана новая задача: {db_todo.title}")
     return db_todo
 
