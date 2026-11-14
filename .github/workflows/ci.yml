@@ -68,4 +68,4 @@ jobs:
         run: poetry run pytest tests -v
 
       - name: Run type checker (mypy)
-        run: poetry run mypy app
+        run: poetry run mypy -p app
