@@ -66,3 +66,6 @@ jobs:
         env:
           DATABASE_URL: postgresql+asyncpg://todo_user:todo_password@localhost:5432/todo_db_test
         run: poetry run pytest tests -v
+
+      - name: Run type checker (mypy)
+        run: poetry run mypy app
