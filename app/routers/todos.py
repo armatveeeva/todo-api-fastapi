@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from .. import crud, schemas
+from .. import crud
 from ..database import get_db
+from ..schemas import TodoCreate, TodoResponse, TodoUpdate  # type: ignore[attr-defined]
 
 router = APIRouter(
     prefix="/todos",
@@ -11,14 +12,14 @@ router = APIRouter(
 )
 
 
-@router.get("/", response_model=list[schemas.TodoResponse])
+@router.get("/", response_model=list[TodoResponse])
 async def read_todos(
     skip: int = 0, limit: int = 10, completed: bool | None = None, db: AsyncSession = Depends(get_db)
 ):
     return await crud.get_todos(db, skip=skip, limit=limit, completed=completed)
 
 
-@router.get("/{todo_id}", response_model=schemas.TodoResponse)
+@router.get("/{todo_id}", response_model=TodoResponse)
 async def read_todo(todo_id: int, db: AsyncSession = Depends(get_db)):
     todo = await crud.get_todo(db, todo_id)
     if not todo:
@@ -26,13 +27,13 @@ async def read_todo(todo_id: int, db: AsyncSession = Depends(get_db)):
     return todo
 
 
-@router.post("/", response_model=schemas.TodoResponse, status_code=status.HTTP_201_CREATED)
-async def create_todo(todo: schemas.TodoCreate, db: AsyncSession = Depends(get_db)):
+@router.post("/", response_model=TodoResponse, status_code=status.HTTP_201_CREATED)
+async def create_todo(todo: TodoCreate, db: AsyncSession = Depends(get_db)):
     return await crud.create_todo(db, todo)
 
 
-@router.put("/{todo_id}", response_model=schemas.TodoResponse)
-async def update_todo(todo_id: int, todo: schemas.TodoUpdate, db: AsyncSession = Depends(get_db)):
+@router.put("/{todo_id}", response_model=TodoResponse)
+async def update_todo(todo_id: int, todo: TodoUpdate, db: AsyncSession = Depends(get_db)):
     updated_todo = await crud.update_todo(db, todo_id, todo)
     if not updated_todo:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Todo not found")
