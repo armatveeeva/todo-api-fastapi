@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from .. import crud
 from ..database import get_db
-from ..schemas import TodoCreate, TodoResponse, TodoUpdate  # type: ignore[attr-defined]
+from ..schemas import TodoCreate, TodoResponse, TodoUpdate
 
 router = APIRouter(
     prefix="/todos",

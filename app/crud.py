@@ -4,7 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from . import models, notifications
-from .schemas import TodoCreate, TodoUpdate  # type: ignore[attr-defined]
+from .schemas import TodoCreate, TodoUpdate
 
 logger = logging.getLogger(__name__)
 
