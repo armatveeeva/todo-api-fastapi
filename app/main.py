@@ -19,10 +19,10 @@ app.include_router(todos.router)
 
 
 @app.get("/")
-def root():
+def root() -> dict[str, str]:
     return {"message": "Welcome to Production-Ready Todo API!"}
 
 
 @app.get("/health")
-def health_check():
+def health_check() -> dict[str, str]:
     return {"status": "healthy"}
