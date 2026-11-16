@@ -2,16 +2,16 @@
 name = "todo-api"
 version = "1.0.0"
 description = "Async FastAPI todo service with layered architecture"
-authors = ["Your Name <you@example.com>"]
+authors = ["Anastasiia Matveeva <armatveeeva@gmail.com>"]
 readme = "README.md"
 packages = [{ include = "app" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-fastapi = "0.109.0"
-uvicorn = { version = "0.27.0", extras = ["standard"] }
+fastapi = ">=0.109.0,<1.0.0"
+uvicorn = { version = ">=0.27.0,<1.0.0", extras = ["standard"] }
 sqlalchemy = { version = "2.0.25", extras = ["asyncio"] }
-asyncpg = "0.29.0"
+asyncpg = ">=0.29.0,<1.0.0"
 alembic = "1.13.1"
 pydantic = "^2.5"
 pydantic-settings = "^2.1"
@@ -41,8 +41,9 @@ explicit_package_bases = true
 plugins = ["pydantic.mypy"]
 warn_unused_ignores = true
 warn_redundant_casts = true
-check_untyped_defs = false
-disallow_untyped_defs = false
+check_untyped_defs = true
+disallow_untyped_defs = true
+warn_return_any = true
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
